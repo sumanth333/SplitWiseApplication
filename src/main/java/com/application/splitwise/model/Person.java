@@ -1,20 +1,13 @@
 package com.application.splitwise.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class Person {
     private String name;
-    private Long expenditure;
-
-    public Person(String name, Long expenditure) {
-        this.name = name;
-        this.expenditure = expenditure;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Long getExpenditure() {
-        return expenditure;
-    }
-
+    private double expenditure;
 }
