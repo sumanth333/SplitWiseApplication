@@ -39,7 +39,7 @@ jacocoTestReport {
 jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['com/application/splitwise/SplitWiseApplication**'])
+            fileTree(dir: it, exclude: ['com/application/splitwise/ApplicationStarter**'])
         }))
     }
 
