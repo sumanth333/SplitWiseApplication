@@ -33,13 +33,13 @@ jacocoTestReport {
         csv.required = false
         html.required = true
     }
-    finalizedBy jacocoTestCoverageVerification
 }
 
 jacocoTestCoverageVerification {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: ['com/application/splitwise/ApplicationStarter**'])
+            fileTree(dir: it, exclude: ['com/application/splitwise/ApplicationStarter**',
+                                        'com/application/splitwise/model/**'])
         }))
     }
 
@@ -47,8 +47,10 @@ jacocoTestCoverageVerification {
         rule {
             enabled = true
             limit {
-                minimum = 1.00
+                minimum = 0.95
             }
         }
     }
 }
+
+tasks.build.dependsOn(jacocoTestCoverageVerification)
