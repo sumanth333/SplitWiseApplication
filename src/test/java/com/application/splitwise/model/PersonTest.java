@@ -28,19 +28,4 @@ class PersonTest {
         assertEquals(name, person.getName());
         assertEquals(expenditure, person.getExpenditure());
     }
-
-    @Test
-    void validateUpdatingPersonAttributes() {
-        Person person = new Person("dummy", 100);
-
-        String updatedName = "Peter";
-        double updatedExpenditure = 100;
-        person.setName(updatedName);
-        person.setExpenditure(updatedExpenditure);
-
-        assertEquals(updatedName, person.getName());
-        assertEquals(updatedExpenditure, person.getExpenditure());
-
-    }
-
 }

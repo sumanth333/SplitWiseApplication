@@ -17,22 +17,4 @@ class SplitExpensesLogTest {
         assertEquals(beneficiaryName, splitExpensesLog.getBeneficiaryName());
         assertEquals(amountToBePaid, splitExpensesLog.getAmountTobePaid());
     }
-
-    @Test
-    void shouldBeAbleToModifySplitExpensesLogDetails() {
-        SplitExpensesLog splitExpensesLog = new SplitExpensesLog("debtorName", "beneficiaryName", 10);
-
-        String updatedDebtorName = "SampleDebtor";
-        String updatedBeneficiaryName = "sampleBeneficiary";
-        double updatedAmountToBePaid = 100;
-        splitExpensesLog.setDebtorName(updatedDebtorName);
-        splitExpensesLog.setBeneficiaryName(updatedBeneficiaryName);
-        splitExpensesLog.setAmountTobePaid(updatedAmountToBePaid);
-
-        assertEquals(updatedDebtorName, splitExpensesLog.getDebtorName());
-        assertEquals(updatedBeneficiaryName, splitExpensesLog.getBeneficiaryName());
-        assertEquals(updatedAmountToBePaid, splitExpensesLog.getAmountTobePaid());
-
-    }
-
 }

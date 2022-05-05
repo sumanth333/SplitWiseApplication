@@ -16,17 +16,4 @@ class DebtorTest {
         assertEquals(name, debtor.getName());
         assertEquals(amountInDebt, debtor.getAmountInDebt());
     }
-
-    @Test
-    void validateUpdatedAttributesOfGivenDebtor() {
-        Debtor debtor = new Debtor("temporaryName", 100);
-
-        String updatedName = "updatedDebtor";
-        double updatedAmountInDebt = 300;
-        debtor.setName(updatedName);
-        debtor.setAmountInDebt(updatedAmountInDebt);
-
-        assertEquals(updatedName, debtor.getName());
-        assertEquals(updatedAmountInDebt, debtor.getAmountInDebt());
-    }
 }

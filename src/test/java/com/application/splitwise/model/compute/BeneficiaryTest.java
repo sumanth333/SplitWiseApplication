@@ -15,19 +15,4 @@ class BeneficiaryTest {
         assertEquals(name, beneficiary.getName());
         assertEquals(amountToBeReceived, beneficiary.getAmountTobeReceived());
     }
-
-    @Test
-    void validateUpdatingTheAttributesOfBeneficiary() {
-        Beneficiary beneficiary = new Beneficiary("sampleBeneficiary", 100);
-
-        String updatedName = "updatedBeneficiaryName";
-        double updatedAmount = 500;
-        beneficiary.setName(updatedName);
-        beneficiary.setAmountTobeReceived(updatedAmount);
-
-        assertEquals(updatedName, beneficiary.getName());
-        assertEquals(updatedAmount, beneficiary.getAmountTobeReceived());
-
-    }
-
 }
