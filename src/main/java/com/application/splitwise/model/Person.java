@@ -2,10 +2,13 @@ package com.application.splitwise.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 @Getter
 @AllArgsConstructor
 public class Person {
+    @NonNull
     private String name;
-    private double expenditure;
+    @NonNull
+    private Double expenditure;
 }

@@ -3,6 +3,7 @@ package com.application.splitwise.model;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -27,5 +28,22 @@ class PersonTest {
 
         assertEquals(name, person.getName());
         assertEquals(expenditure, person.getExpenditure());
+    }
+
+    @Test
+    void shouldThrowExceptionOnMandatoryValuesNotProvided() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new Person(null, 100.0));
+        assertThrows(
+                NullPointerException.class,
+                () -> new Person("Adam", null));
+    }
+
+    @Test
+    void shouldThrowExceptionOnAllNullValuesProvided() {
+        assertThrows(
+                NullPointerException.class,
+                () -> new Person(null, null));
     }
 }

@@ -21,7 +21,7 @@ public class ConsoleInputReader implements InputReader{
 
         while(!(userInput=input.nextLine()).isEmpty()) {
             String[] userData = userInput.split(",");
-            personList.add(new Person(userData[0], Long.parseLong(userData[1])));
+            personList.add(new Person(userData[0], Double.parseDouble(userData[1])));
         }
 
         return personList;
