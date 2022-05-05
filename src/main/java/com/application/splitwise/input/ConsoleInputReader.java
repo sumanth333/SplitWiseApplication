@@ -1,17 +1,19 @@
 package com.application.splitwise.input;
 
 import com.application.splitwise.model.Person;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Getter
 public class ConsoleInputReader implements InputReader{
 
-    Scanner input;
+    private Scanner inputReader;
 
     public ConsoleInputReader() {
-        input = new Scanner(System.in);
+        inputReader = new Scanner(System.in);
     }
 
     @Override
@@ -19,12 +21,15 @@ public class ConsoleInputReader implements InputReader{
         List<Person> personList = new ArrayList<>();
         String userInput;
 
-        while(!(userInput=input.nextLine()).isEmpty()) {
-            String[] userData = userInput.split(",");
-            personList.add(new Person(userData[0], Double.parseDouble(userData[1])));
+        while(!((userInput= inputReader.nextLine()).isEmpty())) {
+            personList.add(parsePersonExpenditureInput(userInput));
         }
 
         return personList;
     }
 
+    private Person parsePersonExpenditureInput(String input) {
+        String[] personData = input.split(",");
+        return new Person(personData[0], Double.parseDouble(personData[1]));
+    }
 }
