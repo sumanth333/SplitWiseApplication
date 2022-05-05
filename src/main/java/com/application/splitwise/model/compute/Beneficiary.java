@@ -10,5 +10,9 @@ public class Beneficiary {
     @NonNull
     private String name;
     @NonNull
-    private Double amountTobeReceived;
+    private Double amountToBeReceived;
+
+    public void setAmountToBeReceived(Double amountToBeReceived) {
+        this.amountToBeReceived = amountToBeReceived;
+    }
 }

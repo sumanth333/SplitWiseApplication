@@ -11,4 +11,8 @@ public class Debtor {
     private String name;
     @NonNull
     private Double amountInDebt;
+
+    public void setAmountInDebt(Double amountInDebt) {
+        this.amountInDebt = amountInDebt;
+    }
 }

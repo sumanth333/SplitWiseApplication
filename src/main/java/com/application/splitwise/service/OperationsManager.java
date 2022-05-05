@@ -1,6 +1,7 @@
 package com.application.splitwise.service;
 
 import com.application.splitwise.model.Person;
+import com.application.splitwise.model.SplitExpensesLog;
 import com.application.splitwise.model.compute.Beneficiary;
 import com.application.splitwise.model.compute.Debtor;
 
@@ -35,6 +36,38 @@ public class OperationsManager implements SplitWiseOperations{
         }
 
         return beneficiaries;
+    }
+
+    @Override
+    public List<SplitExpensesLog> settleAmountBetweenDebtorsBeneficiaries(
+            List<Debtor> debtors, List<Beneficiary> beneficiaries) {
+        List<SplitExpensesLog> listOfSplitExpensesLogs = new ArrayList<>();
+
+        int debtorIndex = 0;
+        int beneficiaryIndex = 0;
+
+        while (debtorIndex < debtors.size()) {
+            Double debtAmount = debtors.get(debtorIndex).getAmountInDebt();
+            Double benefitAmount = beneficiaries.get(beneficiaryIndex).getAmountToBeReceived();
+
+            //Add SplitExpenseLog
+            listOfSplitExpensesLogs.add(new SplitExpensesLog(debtors.get(debtorIndex).getName(),
+                    beneficiaries.get(beneficiaryIndex).getName(), Math.abs(benefitAmount-debtAmount)));
+
+            //update the indexes
+            if(benefitAmount > debtAmount) {
+                beneficiaries.get(beneficiaryIndex).setAmountToBeReceived(benefitAmount-debtAmount);
+                debtorIndex++;
+            } else if(benefitAmount < debtAmount) {
+                debtors.get(debtorIndex).setAmountInDebt(debtAmount-benefitAmount);
+                beneficiaryIndex++;
+            } else {
+                debtorIndex++;
+                beneficiaryIndex++;
+            }
+        }
+
+        return listOfSplitExpensesLogs;
     }
 
     private Double findEqualShare(List<Person> personsList) {

@@ -2,6 +2,7 @@ package com.application.splitwise.service;
 
 
 import com.application.splitwise.model.Person;
+import com.application.splitwise.model.SplitExpensesLog;
 import com.application.splitwise.model.compute.Beneficiary;
 import com.application.splitwise.model.compute.Debtor;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -68,5 +70,40 @@ class OperationsManagerTest {
 
         assertTrue(beneficiaries.isEmpty());
         assertTrue(debtors.isEmpty());
+    }
+
+    @Test
+    void ShouldBeAbleToCreateValidExpenseLogsForGivenValues() {
+        Debtor debtor1 = new Debtor("peter", 50.0);
+        Debtor debtor2 = new Debtor("james", 100.0);
+        Beneficiary beneficiary1 = new Beneficiary("adam", 70.0);
+        Beneficiary beneficiary2 = new Beneficiary("john", 80.0);
+
+        List<Debtor> debtors = new ArrayList<>(); debtors.add(debtor1); debtors.add(debtor2);
+        List<Beneficiary> beneficiaries = new ArrayList<>(); beneficiaries.add(beneficiary1); beneficiaries.add(beneficiary2);
+
+        SplitWiseOperations operations = new OperationsManager();
+        List<SplitExpensesLog> splitExpensesLogs = operations.settleAmountBetweenDebtorsBeneficiaries(
+                                                                debtors, beneficiaries);
+
+        assertEquals(3, splitExpensesLogs.size());
+    }
+
+    @Test
+    void shouldThrowAnExceptionForGivenInvalidValues() {
+        Debtor debtor1 = new Debtor("peter", 50.0);
+        Debtor debtor2 = new Debtor("james", 100.0);
+
+        List<Debtor> debtors = new ArrayList<>(); debtors.add(debtor1); debtors.add(debtor2);
+        List<Beneficiary> beneficiaries = new ArrayList<>();
+
+        SplitWiseOperations operations = new OperationsManager();
+
+        assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> operations.settleAmountBetweenDebtorsBeneficiaries(
+                        debtors, beneficiaries)
+        );
+
     }
 }

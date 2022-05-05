@@ -14,7 +14,7 @@ class BeneficiaryTest {
         Beneficiary beneficiary = new Beneficiary(name, amountToBeReceived);
 
         assertEquals(name, beneficiary.getName());
-        assertEquals(amountToBeReceived, beneficiary.getAmountTobeReceived());
+        assertEquals(amountToBeReceived, beneficiary.getAmountToBeReceived());
     }
 
     @Test
