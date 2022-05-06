@@ -8,17 +8,17 @@ import com.application.splitwise.model.compute.Debtor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperationsManager implements SplitWiseOperations{
+public class OperationsManager implements SplitWiseOperations {
 
     @Override
     public List<Debtor> findDebtors(List<Person> personsList) {
         List<Debtor> debtors = new ArrayList<>();
         Double equalShare = findEqualShare(personsList);
 
-        for(Person person: personsList) {
+        for (Person person : personsList) {
             Double expenditure = person.getExpenditure();
-            if(expenditure < equalShare)
-                debtors.add(new Debtor(person.getName(), (equalShare-expenditure)));
+            if (expenditure < equalShare)
+                debtors.add(new Debtor(person.getName(), (equalShare - expenditure)));
         }
 
         return debtors;
@@ -29,10 +29,10 @@ public class OperationsManager implements SplitWiseOperations{
         List<Beneficiary> beneficiaries = new ArrayList<>();
         Double equalShare = findEqualShare(personsList);
 
-        for(Person person: personsList) {
+        for (Person person : personsList) {
             Double expenditure = person.getExpenditure();
-            if(expenditure > equalShare)
-                beneficiaries.add(new Beneficiary(person.getName(), (equalShare-expenditure)));
+            if (expenditure > equalShare)
+                beneficiaries.add(new Beneficiary(person.getName(), (expenditure - equalShare)));
         }
 
         return beneficiaries;
@@ -47,19 +47,20 @@ public class OperationsManager implements SplitWiseOperations{
         int beneficiaryIndex = 0;
 
         while (debtorIndex < debtors.size()) {
-            Double debtAmount = debtors.get(debtorIndex).getAmountInDebt();
-            Double benefitAmount = beneficiaries.get(beneficiaryIndex).getAmountToBeReceived();
+            double debtAmount = debtors.get(debtorIndex).getAmountInDebt();
+            double benefitAmount = beneficiaries.get(beneficiaryIndex).getAmountToBeReceived();
+            double amountAssigned = (benefitAmount == debtAmount) ? benefitAmount : Math.abs(benefitAmount - debtAmount);
 
             //Add SplitExpenseLog
             listOfSplitExpensesLogs.add(new SplitExpensesLog(debtors.get(debtorIndex).getName(),
-                    beneficiaries.get(beneficiaryIndex).getName(), Math.abs(benefitAmount-debtAmount)));
+                    beneficiaries.get(beneficiaryIndex).getName(), amountAssigned));
 
             //update the indexes
-            if(benefitAmount > debtAmount) {
-                beneficiaries.get(beneficiaryIndex).setAmountToBeReceived(benefitAmount-debtAmount);
+            if (benefitAmount > debtAmount) {
+                beneficiaries.get(beneficiaryIndex).setAmountToBeReceived(benefitAmount - debtAmount);
                 debtorIndex++;
-            } else if(benefitAmount < debtAmount) {
-                debtors.get(debtorIndex).setAmountInDebt(debtAmount-benefitAmount);
+            } else if (benefitAmount < debtAmount) {
+                debtors.get(debtorIndex).setAmountInDebt(debtAmount - benefitAmount);
                 beneficiaryIndex++;
             } else {
                 debtorIndex++;
@@ -72,10 +73,10 @@ public class OperationsManager implements SplitWiseOperations{
 
     private Double findEqualShare(List<Person> personsList) {
         double sum = 0.0;
-        for(Person person: personsList) {
+        for (Person person : personsList) {
             sum += person.getExpenditure();
         }
 
-        return sum/personsList.size();
+        return sum / personsList.size();
     }
 }
