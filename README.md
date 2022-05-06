@@ -1,1 +1,3 @@
-# SplitWiseApplication
+# SplitWiseApp
+
+![img.png](img.png)
