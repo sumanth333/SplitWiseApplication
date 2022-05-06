@@ -44,6 +44,7 @@ class ConsoleInputReaderTest {
                 reader::readPersonsExpenditure
         );
     }
+
     @Test
     void shouldThrowAnExceptionIfInputValuesAreIncorrect() {
         InputStream stdin = System.in;

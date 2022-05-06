@@ -16,11 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OperationsManagerTest {
     @Test
-    void shouldReturnEmptyListWhenPersonsShareIsFair() {
+    void shouldReturnEmptyDebtorsBeneficiariesWhenPersonsShareIsFair() {
         List<Person> personList = new ArrayList<>();
         Person person1 = new Person("testPerson1", 100.0);
         Person person2 = new Person("testPerson2", 100.0);
-        personList.add(person1);personList.add(person2);
+        personList.add(person1);
+        personList.add(person2);
 
         OperationsManager operationsManager = new OperationsManager();
         List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personList);
@@ -35,14 +36,14 @@ class OperationsManagerTest {
         List<Person> personList = new ArrayList<>();
         Person person1 = new Person("testPerson1", 100.0);
         Person person2 = new Person("testPerson2", 50.0);
-        personList.add(person1);personList.add(person2);
+        personList.add(person1);
+        personList.add(person2);
 
         OperationsManager operationsManager = new OperationsManager();
         List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personList);
 
         assertEquals(1, beneficiaries.size());
         assertEquals(person1.getName(), beneficiaries.get(0).getName());
-
     }
 
     @Test
@@ -50,18 +51,18 @@ class OperationsManagerTest {
         List<Person> personList = new ArrayList<>();
         Person person1 = new Person("testPerson1", 100.0);
         Person person2 = new Person("testPerson2", 50.0);
-        personList.add(person1);personList.add(person2);
+        personList.add(person1);
+        personList.add(person2);
 
         OperationsManager operationsManager = new OperationsManager();
         List<Debtor> debtors = operationsManager.findDebtors(personList);
 
         assertEquals(1, debtors.size());
         assertEquals(person2.getName(), debtors.get(0).getName());
-
     }
 
     @Test
-    void shouldReturnEmptyListWhenNoDataProvided() {
+    void shouldReturnEmptyDebtorsBeneficiariesListWhenNoDataProvided() {
         List<Person> personList = new ArrayList<>();
 
         OperationsManager operationsManager = new OperationsManager();
@@ -79,14 +80,19 @@ class OperationsManagerTest {
         Beneficiary beneficiary1 = new Beneficiary("adam", 70.0);
         Beneficiary beneficiary2 = new Beneficiary("john", 80.0);
 
-        List<Debtor> debtors = new ArrayList<>(); debtors.add(debtor1); debtors.add(debtor2);
-        List<Beneficiary> beneficiaries = new ArrayList<>(); beneficiaries.add(beneficiary1); beneficiaries.add(beneficiary2);
+        List<Debtor> debtors = new ArrayList<>();
+        debtors.add(debtor1);
+        debtors.add(debtor2);
+        List<Beneficiary> beneficiaries = new ArrayList<>();
+        beneficiaries.add(beneficiary1);
+        beneficiaries.add(beneficiary2);
 
         SplitWiseOperations operations = new OperationsManager();
         List<SplitExpensesLog> splitExpensesLogs = operations.settleAmountBetweenDebtorsBeneficiaries(
-                                                                debtors, beneficiaries);
+                debtors, beneficiaries);
 
         assertEquals(3, splitExpensesLogs.size());
+
     }
 
     @Test
@@ -94,7 +100,9 @@ class OperationsManagerTest {
         Debtor debtor1 = new Debtor("peter", 50.0);
         Debtor debtor2 = new Debtor("james", 100.0);
 
-        List<Debtor> debtors = new ArrayList<>(); debtors.add(debtor1); debtors.add(debtor2);
+        List<Debtor> debtors = new ArrayList<>();
+        debtors.add(debtor1);
+        debtors.add(debtor2);
         List<Beneficiary> beneficiaries = new ArrayList<>();
 
         SplitWiseOperations operations = new OperationsManager();
@@ -104,6 +112,5 @@ class OperationsManagerTest {
                 () -> operations.settleAmountBetweenDebtorsBeneficiaries(
                         debtors, beneficiaries)
         );
-
     }
 }

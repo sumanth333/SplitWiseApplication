@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Getter
-public class ConsoleInputReader implements InputReader{
+public class ConsoleInputReader implements InputReader {
 
     private Scanner inputReader;
 
@@ -21,7 +21,7 @@ public class ConsoleInputReader implements InputReader{
         List<Person> personList = new ArrayList<>();
         String userInput;
 
-        while(!((userInput= inputReader.nextLine()).isEmpty())) {
+        while (!((userInput = inputReader.nextLine()).isEmpty())) {
             personList.add(parsePersonExpenditureInput(userInput));
         }
 

@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface SplitWiseOperations {
     List<Debtor> findDebtors(List<Person> personsList);
+
     List<Beneficiary> findBeneficiaries(List<Person> personsList);
+
     List<SplitExpensesLog> settleAmountBetweenDebtorsBeneficiaries(
             List<Debtor> debtors, List<Beneficiary> beneficiaries);
 }
