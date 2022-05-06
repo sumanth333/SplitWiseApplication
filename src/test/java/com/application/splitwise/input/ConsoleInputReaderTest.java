@@ -7,9 +7,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ConsoleInputReaderTest {
 
@@ -29,34 +29,31 @@ class ConsoleInputReaderTest {
     void shouldInstantiateNecessaryAttributes() {
         ConsoleInputReader reader = new ConsoleInputReader();
         assertNotNull(reader.getInputReader());
+        assertNotNull(reader.getInputValidator());
     }
 
     @Test
-    void shouldThrowAnExceptionWhenInputFormatIsIncorrect() {
+    void shouldReturnEmptyListFormAnInvalidInputFormat() {
         InputStream stdin = System.in;
-        System.setIn(new ByteArrayInputStream("Person1 100\n\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("Person1 100\n".getBytes()));
 
         ConsoleInputReader reader = new ConsoleInputReader();
         System.setIn(stdin);
 
-        assertThrows(
-                ArrayIndexOutOfBoundsException.class,
-                reader::readPersonsExpenditure
-        );
+        List<Person> personList = reader.readPersonsExpenditure();
+        assertTrue(personList.isEmpty());
     }
 
     @Test
-    void shouldThrowAnExceptionIfInputValuesAreIncorrect() {
+    void shouldReturnEmptyListFormAnInvalidInputValues() {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream("Person1,expenditure\n\n".getBytes()));
 
         ConsoleInputReader reader = new ConsoleInputReader();
         System.setIn(stdin);
 
-        assertThrows(
-                NumberFormatException.class,
-                reader::readPersonsExpenditure
-        );
+        List<Person> personList = reader.readPersonsExpenditure();
+        assertTrue(personList.isEmpty());
     }
 
 }
