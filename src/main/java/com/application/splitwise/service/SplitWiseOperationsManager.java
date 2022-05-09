@@ -8,9 +8,8 @@ import com.application.splitwise.model.compute.Debtor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperationsManager implements SplitWiseOperations {
+public class SplitWiseOperationsManager {
 
-    @Override
     public List<Debtor> findDebtors(List<Person> personsList) {
         List<Debtor> debtors = new ArrayList<>();
         Double equalShare = findEqualShare(personsList);
@@ -24,7 +23,6 @@ public class OperationsManager implements SplitWiseOperations {
         return debtors;
     }
 
-    @Override
     public List<Beneficiary> findBeneficiaries(List<Person> personsList) {
         List<Beneficiary> beneficiaries = new ArrayList<>();
         Double equalShare = findEqualShare(personsList);
@@ -38,7 +36,6 @@ public class OperationsManager implements SplitWiseOperations {
         return beneficiaries;
     }
 
-    @Override
     public List<SplitExpensesLog> settleAmountBetweenDebtorsBeneficiaries(
             List<Debtor> debtors, List<Beneficiary> beneficiaries) {
         List<SplitExpensesLog> listOfSplitExpensesLogs = new ArrayList<>();
@@ -60,7 +57,7 @@ public class OperationsManager implements SplitWiseOperations {
                 beneficiaries.get(beneficiaryIndex).setAmountToBeReceived(benefitAmount - debtAmount);
                 debtorIndex++;
             } else if (benefitAmount < debtAmount) {
-                debtors.get(debtorIndex).setAmountInDebt(debtAmount - benefitAmount);
+                debtors.get(debtorIndex).updateAmountInDebt(debtAmount - benefitAmount);
                 beneficiaryIndex++;
             } else {
                 debtorIndex++;

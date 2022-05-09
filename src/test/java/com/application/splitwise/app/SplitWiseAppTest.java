@@ -2,7 +2,7 @@ package com.application.splitwise.app;
 
 import com.application.splitwise.input.InputReader;
 import com.application.splitwise.output.OutputWriter;
-import com.application.splitwise.service.OperationsManager;
+import com.application.splitwise.service.SplitWiseOperationsManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,29 +20,29 @@ class SplitWiseAppTest {
     @Mock
     InputReader mockReader;
     @Mock
-    OperationsManager mockOperationsManager;
+    SplitWiseOperationsManager mockSplitWiseOperationsManager;
     @Mock
     OutputWriter mockOutputWriter;
 
     @BeforeEach
     void setUp() {
         when(mockReader.readPersonsExpenditure()).thenReturn(Collections.emptyList());
-        when(mockOperationsManager.findDebtors(any())).thenReturn(Collections.emptyList());
-        when(mockOperationsManager.findBeneficiaries(any())).thenReturn(Collections.emptyList());
-        when(mockOperationsManager.settleAmountBetweenDebtorsBeneficiaries(any(), any())).thenReturn(Collections.emptyList());
+        when(mockSplitWiseOperationsManager.findDebtors(any())).thenReturn(Collections.emptyList());
+        when(mockSplitWiseOperationsManager.findBeneficiaries(any())).thenReturn(Collections.emptyList());
+        when(mockSplitWiseOperationsManager.settleAmountBetweenDebtorsBeneficiaries(any(), any())).thenReturn(Collections.emptyList());
     }
 
     @Test
     void verifyImportantMethodCallsOnRunningApp() {
         SplitWiseApp splitWiseApp = new SplitWiseApp();
-        splitWiseApp.reader = mockReader;
-        splitWiseApp.operationsManager = mockOperationsManager;
-        splitWiseApp.outputWriter = mockOutputWriter;
+        splitWiseApp.setReader(mockReader);
+        splitWiseApp.setSplitWiseOperationsManager(mockSplitWiseOperationsManager);
+        splitWiseApp.setOutputWriter(mockOutputWriter);
         splitWiseApp.run();
 
         verify(mockReader).readPersonsExpenditure();
-        verify(mockOperationsManager).findBeneficiaries(any());
-        verify(mockOperationsManager).findDebtors(any());
+        verify(mockSplitWiseOperationsManager).findBeneficiaries(any());
+        verify(mockSplitWiseOperationsManager).findDebtors(any());
         verify(mockOutputWriter).writeSplitExpensesLog(any());
     }
 

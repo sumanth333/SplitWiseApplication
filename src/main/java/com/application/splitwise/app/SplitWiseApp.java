@@ -8,23 +8,23 @@ import com.application.splitwise.model.compute.Beneficiary;
 import com.application.splitwise.model.compute.Debtor;
 import com.application.splitwise.output.ConsoleOutputWriter;
 import com.application.splitwise.output.OutputWriter;
-import com.application.splitwise.service.OperationsManager;
-import com.application.splitwise.service.SplitWiseOperations;
+import com.application.splitwise.service.SplitWiseOperationsManager;
+import lombok.Setter;
 
 import java.util.List;
 
-public class SplitWiseApp implements App {
-    InputReader reader;
-    SplitWiseOperations operationsManager;
-    OutputWriter outputWriter;
+@Setter
+public class SplitWiseApp {
+    private InputReader reader;
+    private SplitWiseOperationsManager splitWiseOperationsManager;
+    private OutputWriter outputWriter;
 
     public SplitWiseApp() {
         reader = new ConsoleInputReader();
         outputWriter = new ConsoleOutputWriter();
-        operationsManager = new OperationsManager();
+        splitWiseOperationsManager = new SplitWiseOperationsManager();
     }
 
-    @Override
     public void run() {
         List<Person> personsList = reader.readPersonsExpenditure();
         List<SplitExpensesLog> listOfSplitExpensesLog = processPersonsExpenditure(personsList);
@@ -32,9 +32,9 @@ public class SplitWiseApp implements App {
     }
 
     private List<SplitExpensesLog> processPersonsExpenditure(List<Person> personsList) {
-        List<Debtor> debtors = operationsManager.findDebtors(personsList);
-        List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personsList);
+        List<Debtor> debtors = splitWiseOperationsManager.findDebtors(personsList);
+        List<Beneficiary> beneficiaries = splitWiseOperationsManager.findBeneficiaries(personsList);
 
-        return operationsManager.settleAmountBetweenDebtorsBeneficiaries(debtors, beneficiaries);
+        return splitWiseOperationsManager.settleAmountBetweenDebtorsBeneficiaries(debtors, beneficiaries);
     }
 }

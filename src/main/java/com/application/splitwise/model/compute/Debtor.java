@@ -12,7 +12,7 @@ public class Debtor {
     @NonNull
     private Double amountInDebt;
 
-    public void setAmountInDebt(Double amountInDebt) {
+    public void updateAmountInDebt(Double amountInDebt) {
         this.amountInDebt = amountInDebt;
     }
 }

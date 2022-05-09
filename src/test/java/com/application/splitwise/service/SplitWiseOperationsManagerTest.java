@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class OperationsManagerTest {
+class SplitWiseOperationsManagerTest {
     @Test
     void shouldReturnEmptyDebtorsBeneficiariesWhenPersonsShareIsFair() {
         List<Person> personList = new ArrayList<>();
@@ -23,9 +23,9 @@ class OperationsManagerTest {
         personList.add(person1);
         personList.add(person2);
 
-        OperationsManager operationsManager = new OperationsManager();
-        List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personList);
-        List<Debtor> debtors = operationsManager.findDebtors(personList);
+        SplitWiseOperationsManager splitWiseOperationsManager = new SplitWiseOperationsManager();
+        List<Beneficiary> beneficiaries = splitWiseOperationsManager.findBeneficiaries(personList);
+        List<Debtor> debtors = splitWiseOperationsManager.findDebtors(personList);
 
         assertTrue(beneficiaries.isEmpty());
         assertTrue(debtors.isEmpty());
@@ -39,8 +39,8 @@ class OperationsManagerTest {
         personList.add(person1);
         personList.add(person2);
 
-        OperationsManager operationsManager = new OperationsManager();
-        List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personList);
+        SplitWiseOperationsManager splitWiseOperationsManager = new SplitWiseOperationsManager();
+        List<Beneficiary> beneficiaries = splitWiseOperationsManager.findBeneficiaries(personList);
 
         assertEquals(1, beneficiaries.size());
         assertEquals(person1.getName(), beneficiaries.get(0).getName());
@@ -54,8 +54,8 @@ class OperationsManagerTest {
         personList.add(person1);
         personList.add(person2);
 
-        OperationsManager operationsManager = new OperationsManager();
-        List<Debtor> debtors = operationsManager.findDebtors(personList);
+        SplitWiseOperationsManager splitWiseOperationsManager = new SplitWiseOperationsManager();
+        List<Debtor> debtors = splitWiseOperationsManager.findDebtors(personList);
 
         assertEquals(1, debtors.size());
         assertEquals(person2.getName(), debtors.get(0).getName());
@@ -65,9 +65,9 @@ class OperationsManagerTest {
     void shouldReturnEmptyDebtorsBeneficiariesListWhenNoDataProvided() {
         List<Person> personList = new ArrayList<>();
 
-        OperationsManager operationsManager = new OperationsManager();
-        List<Beneficiary> beneficiaries = operationsManager.findBeneficiaries(personList);
-        List<Debtor> debtors = operationsManager.findDebtors(personList);
+        SplitWiseOperationsManager splitWiseOperationsManager = new SplitWiseOperationsManager();
+        List<Beneficiary> beneficiaries = splitWiseOperationsManager.findBeneficiaries(personList);
+        List<Debtor> debtors = splitWiseOperationsManager.findDebtors(personList);
 
         assertTrue(beneficiaries.isEmpty());
         assertTrue(debtors.isEmpty());
@@ -87,7 +87,7 @@ class OperationsManagerTest {
         beneficiaries.add(beneficiary1);
         beneficiaries.add(beneficiary2);
 
-        SplitWiseOperations operations = new OperationsManager();
+        SplitWiseOperationsManager operations = new SplitWiseOperationsManager();
         List<SplitExpensesLog> splitExpensesLogs = operations.settleAmountBetweenDebtorsBeneficiaries(
                 debtors, beneficiaries);
 
@@ -105,11 +105,11 @@ class OperationsManagerTest {
         debtors.add(debtor2);
         List<Beneficiary> beneficiaries = new ArrayList<>();
 
-        SplitWiseOperations operations = new OperationsManager();
+        SplitWiseOperationsManager operationsManager = new SplitWiseOperationsManager();
 
         assertThrows(
                 IndexOutOfBoundsException.class,
-                () -> operations.settleAmountBetweenDebtorsBeneficiaries(
+                () -> operationsManager.settleAmountBetweenDebtorsBeneficiaries(
                         debtors, beneficiaries)
         );
     }

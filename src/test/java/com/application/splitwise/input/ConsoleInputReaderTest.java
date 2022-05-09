@@ -26,6 +26,19 @@ class ConsoleInputReaderTest {
     }
 
     @Test
+    void shouldAcceptMultipleExpenditureOfSamePerson() {
+        InputStream stdin = System.in;
+        System.setIn(new ByteArrayInputStream("Person1,100\nPerson1,20\nPerson2,60\nexit\n".getBytes()));
+
+        ConsoleInputReader reader = new ConsoleInputReader();
+        System.setIn(stdin);
+
+        List<Person> personsList = reader.readPersonsExpenditure();
+        assertEquals(2, personsList.size());
+        assertEquals(120, personsList.get(0).getExpenditure());
+    }
+
+    @Test
     void shouldInstantiateNecessaryAttributes() {
         ConsoleInputReader reader = new ConsoleInputReader();
         assertNotNull(reader.getInputReader());
