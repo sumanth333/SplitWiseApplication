@@ -8,8 +8,8 @@ public class ConsoleOutputWriter implements OutputWriter {
     @Override
     public void writeSplitExpensesLog(List<SplitExpensesLog> splitExpensesLogs) {
         for (SplitExpensesLog splitExpensesLog : splitExpensesLogs) {
-            System.out.println(splitExpensesLog.getDebtorName() + "->" +
-                    splitExpensesLog.getBeneficiaryName() + ", " + splitExpensesLog.getAmountTobePaid());
+            System.out.println(splitExpensesLog.getDebtorName() + " owes " +
+                    splitExpensesLog.getBeneficiaryName() + " Rs. " + splitExpensesLog.getAmountTobePaid());
         }
     }
 }

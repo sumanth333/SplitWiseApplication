@@ -38,7 +38,7 @@ class ConsoleOutputWriterTest {
         OutputWriter outputWriter = new ConsoleOutputWriter();
         outputWriter.writeSplitExpensesLog(splitExpensesLogs);
 
-        assertEquals("debtor->beneficiary, 100.0", outputStreamCaptor.toString()
+        assertEquals("debtor owes beneficiary Rs. 100.0", outputStreamCaptor.toString()
                 .trim());
     }
 
