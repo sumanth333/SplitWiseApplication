@@ -1,11 +1,10 @@
 package com.application.splitwise.model;
 
 
+import com.application.splitwise.model.compute.Beneficiary;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PersonTest {
 
@@ -38,6 +37,22 @@ class PersonTest {
         assertThrows(
                 NullPointerException.class,
                 () -> new Person("Adam", null));
+    }
+    @Test
+    void shouldReturnFalseOnComparingPersonWithInvalidObjects() {
+        Person person = new Person("James", 100.0);
+        Beneficiary beneficiary = new Beneficiary("sample", 50.0);
+
+        assertFalse(person.equals(beneficiary));
+        assertFalse(person.equals(null));
+    }
+
+    @Test
+    void shouldReturnAValidHashCodeForGivenPerson() {
+        Person person = new Person("James", 100.0);
+        int expectedHashcode = 71338435;
+
+        assertEquals(expectedHashcode, person.hashCode());
     }
 
     @Test
