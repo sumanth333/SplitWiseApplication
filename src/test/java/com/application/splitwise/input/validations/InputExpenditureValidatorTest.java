@@ -7,25 +7,25 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class InputValidatorTest {
+class InputExpenditureValidatorTest {
 
     @Test
     void shouldReturnTrueForValidPersonExpenditureInput()
             throws InvalidInputValueException, InvalidInputFormatException {
 
         String personExpenditureInput = "James,100.0";
-        InputValidator inputValidator = new InputValidator();
+        InputExpenditureValidator inputExpenditureValidator = new InputExpenditureValidator();
 
-        assertTrue(inputValidator.isValidPersonExpenditureInput(personExpenditureInput));
+        assertTrue(inputExpenditureValidator.isValidPersonExpenditureInput(personExpenditureInput));
     }
     @Test
     void shouldThrowInValidFormatExceptionForInvalidInput() {
 
         String personExpenditureInput = "James 100.0";
-        InputValidator inputValidator = new InputValidator();
+        InputExpenditureValidator inputExpenditureValidator = new InputExpenditureValidator();
 
         InvalidInputFormatException thrownException = Assertions.assertThrows(InvalidInputFormatException.class, () -> {
-            inputValidator.isValidPersonExpenditureInput(personExpenditureInput);
+            inputExpenditureValidator.isValidPersonExpenditureInput(personExpenditureInput);
         }, "InvalidInputFormatException was expected");
 
         Assertions.assertEquals("Given Input Format is invalid :James 100.0, " +
@@ -37,10 +37,10 @@ class InputValidatorTest {
     void shouldThrowInValidValueExceptionForInvalidPersonName() {
 
         String personExpenditureInput = ",100.0";
-        InputValidator inputValidator = new InputValidator();
+        InputExpenditureValidator inputExpenditureValidator = new InputExpenditureValidator();
 
         InvalidInputValueException thrownException = Assertions.assertThrows(InvalidInputValueException.class, () -> {
-            inputValidator.isValidPersonExpenditureInput(personExpenditureInput);
+            inputExpenditureValidator.isValidPersonExpenditureInput(personExpenditureInput);
         }, "InvalidInputValueException was expected");
 
         Assertions.assertEquals("Given Input Values are " +
@@ -52,17 +52,17 @@ class InputValidatorTest {
 
         String personInvalidExpenditureInput1 = "testPerson,-100.0";
         String personInvalidExpenditureInput2 = "testPerson,I'mNotANumber";
-        InputValidator inputValidator = new InputValidator();
+        InputExpenditureValidator inputExpenditureValidator = new InputExpenditureValidator();
 
         InvalidInputValueException thrownException = Assertions.assertThrows(InvalidInputValueException.class, () -> {
-            inputValidator.isValidPersonExpenditureInput(personInvalidExpenditureInput1);
+            inputExpenditureValidator.isValidPersonExpenditureInput(personInvalidExpenditureInput1);
         }, "InvalidInputValueException was expected");
 
         Assertions.assertEquals("Given Input Values are " +
                 "invalid :testPerson,-100.0", thrownException.getMessage());
 
         thrownException = Assertions.assertThrows(InvalidInputValueException.class, () -> {
-            inputValidator.isValidPersonExpenditureInput(personInvalidExpenditureInput2);
+            inputExpenditureValidator.isValidPersonExpenditureInput(personInvalidExpenditureInput2);
         }, "InvalidInputValueException was expected");
 
         Assertions.assertEquals("Given Expenditure Value is " +

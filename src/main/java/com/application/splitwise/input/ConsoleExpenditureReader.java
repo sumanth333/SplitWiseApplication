@@ -2,7 +2,7 @@ package com.application.splitwise.input;
 
 import com.application.splitwise.exceptions.InvalidInputFormatException;
 import com.application.splitwise.exceptions.InvalidInputValueException;
-import com.application.splitwise.input.validations.InputValidator;
+import com.application.splitwise.input.validations.InputExpenditureValidator;
 import com.application.splitwise.model.Expenditure;
 import com.application.splitwise.model.ExpenditureStatus;
 import com.application.splitwise.model.Person;
@@ -15,11 +15,11 @@ import java.util.Scanner;
 public class ConsoleExpenditureReader implements ExpenditureReader {
 
     private final Scanner inputReader;
-    private final InputValidator inputValidator;
+    private final InputExpenditureValidator inputExpenditureValidator;
 
     public ConsoleExpenditureReader() {
         inputReader = new Scanner(System.in);
-        inputValidator = new InputValidator();
+        inputExpenditureValidator = new InputExpenditureValidator();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ConsoleExpenditureReader implements ExpenditureReader {
     private boolean isValidInput(String userInput) {
         boolean isValidInput = false;
         try {
-            isValidInput = inputValidator.isValidPersonExpenditureInput(userInput);
+            isValidInput = inputExpenditureValidator.isValidPersonExpenditureInput(userInput);
         } catch (InvalidInputFormatException | InvalidInputValueException exception) {
             System.err.print("Invalid Input Received from User");
         }
