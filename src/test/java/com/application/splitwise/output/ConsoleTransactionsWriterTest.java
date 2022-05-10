@@ -1,12 +1,14 @@
 package com.application.splitwise.output;
 
-import com.application.splitwise.model.SplitExpensesLog;
+import com.application.splitwise.model.Person;
+import com.application.splitwise.model.Transaction;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-class ConsoleOutputWriterTest {
+class ConsoleTransactionsWriterTest {
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -31,12 +33,16 @@ class ConsoleOutputWriterTest {
 
     @Test
     void shouldBeAbleToPrintValidOutPutForGivenLogs() {
-        SplitExpensesLog splitExpensesLog = new SplitExpensesLog("debtor", "beneficiary", 100.0);
-        List<SplitExpensesLog> splitExpensesLogs = new ArrayList<>();
-        splitExpensesLogs.add(splitExpensesLog);
+        Person testDebtor = new Person("debtor");
+        Person testBeneficiary = new Person("beneficiary");
+        BigDecimal testAmount = new BigDecimal("100.0");
 
-        OutputWriter outputWriter = new ConsoleOutputWriter();
-        outputWriter.writeSplitExpensesLog(splitExpensesLogs);
+        Transaction dummyTransaction = new Transaction(testDebtor, testBeneficiary, testAmount);
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(dummyTransaction);
+
+        TransactionsWriter transactionsWriter = new ConsoleTransactionsWriter();
+        transactionsWriter.writeTransactions(transactions);
 
         assertEquals("debtor owes beneficiary Rs. 100.0", outputStreamCaptor.toString()
                 .trim());
@@ -44,10 +50,10 @@ class ConsoleOutputWriterTest {
 
     @Test
     void shouldNotPrintAnythingForEmptyLog() {
-        List<SplitExpensesLog> splitExpensesLogs = new ArrayList<>();
+        List<Transaction> transactions = new ArrayList<>();
 
-        OutputWriter outputWriter = new ConsoleOutputWriter();
-        outputWriter.writeSplitExpensesLog(splitExpensesLogs);
+        TransactionsWriter transactionsWriter = new ConsoleTransactionsWriter();
+        transactionsWriter.writeTransactions(transactions);
 
         assertTrue(outputStreamCaptor.toString().isEmpty());
     }

@@ -1,19 +1,19 @@
 package com.application.splitwise.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 
-@Getter
-@AllArgsConstructor
-public class Person {
-    @NonNull
-    private String name;
-    @NonNull
-    private Double expenditure;
+import java.util.UUID;
 
-    public void addExpenditure(double amount) {
-        this.expenditure += amount;
+@Getter
+public class Person {
+
+    private final String id;
+    private final String name;
+
+    public Person(@NonNull String name) {
+        id = UUID.randomUUID().toString();
+        this.name = name;
     }
 
     @Override

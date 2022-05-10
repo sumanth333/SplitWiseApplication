@@ -1,40 +1,32 @@
 package com.application.splitwise.app;
 
-import com.application.splitwise.input.ConsoleInputReader;
-import com.application.splitwise.input.InputReader;
-import com.application.splitwise.model.Person;
-import com.application.splitwise.model.SplitExpensesLog;
-import com.application.splitwise.model.compute.Beneficiary;
-import com.application.splitwise.model.compute.Debtor;
-import com.application.splitwise.output.ConsoleOutputWriter;
-import com.application.splitwise.output.OutputWriter;
-import com.application.splitwise.service.SplitWiseOperationsManager;
+import com.application.splitwise.input.ConsoleExpenditureReader;
+import com.application.splitwise.input.ExpenditureReader;
+import com.application.splitwise.model.Expenditure;
+import com.application.splitwise.model.Transaction;
+import com.application.splitwise.output.ConsoleTransactionsWriter;
+import com.application.splitwise.output.TransactionsWriter;
+import com.application.splitwise.service.TransactionsGenerator;
 import lombok.Setter;
 
 import java.util.List;
 
 @Setter
 public class SplitWiseApp {
-    private InputReader reader;
-    private SplitWiseOperationsManager splitWiseOperationsManager;
-    private OutputWriter outputWriter;
+    private ExpenditureReader reader;
+    private TransactionsGenerator transactionsGenerator;
+    private TransactionsWriter writer;
 
     public SplitWiseApp() {
-        reader = new ConsoleInputReader();
-        outputWriter = new ConsoleOutputWriter();
-        splitWiseOperationsManager = new SplitWiseOperationsManager();
+        reader = new ConsoleExpenditureReader();
+        writer = new ConsoleTransactionsWriter();
+        transactionsGenerator = new TransactionsGenerator();
     }
 
     public void run() {
-        List<Person> personsList = reader.readPersonsExpenditure();
-        List<SplitExpensesLog> listOfSplitExpensesLog = processPersonsExpenditure(personsList);
-        outputWriter.writeSplitExpensesLog(listOfSplitExpensesLog);
+        List<Expenditure> expenditures = reader.readExpenditures();
+        List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);
+        writer.writeTransactions(transactions);
     }
 
-    private List<SplitExpensesLog> processPersonsExpenditure(List<Person> personsList) {
-        List<Debtor> debtors = splitWiseOperationsManager.findDebtors(personsList);
-        List<Beneficiary> beneficiaries = splitWiseOperationsManager.findBeneficiaries(personsList);
-
-        return splitWiseOperationsManager.settleAmountBetweenDebtorsBeneficiaries(debtors, beneficiaries);
-    }
 }

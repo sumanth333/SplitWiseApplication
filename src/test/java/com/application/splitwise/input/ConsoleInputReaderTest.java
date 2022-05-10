@@ -1,28 +1,31 @@
 package com.application.splitwise.input;
 
-import com.application.splitwise.model.Person;
+import com.application.splitwise.model.Expenditure;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConsoleInputReaderTest {
 
     @Test
-    void shouldReadPersonExpenditureAndBuildPersonsList() {
+    void shouldReadExpendituresAndReturnValidExpenditures() {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream("Person1,100\nPerson2,50\n\n".getBytes()));
 
-        ConsoleInputReader reader = new ConsoleInputReader();
+        ConsoleExpenditureReader reader = new ConsoleExpenditureReader();
         System.setIn(stdin);
 
-        List<Person> personsList = reader.readPersonsExpenditure();
-        assertEquals(2, personsList.size());
+        List<Expenditure> expenditures = reader.readExpenditures();
+        assertEquals(2, expenditures.size());
+        assertEquals("Person1", expenditures.get(0).getPerson().getName());
+        assertEquals(new BigDecimal("100"), expenditures.get(0).getAmount());
+
     }
 
     @Test
@@ -30,19 +33,12 @@ class ConsoleInputReaderTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream("Person1,100\nPerson1,20\nPerson2,60\nexit\n".getBytes()));
 
-        ConsoleInputReader reader = new ConsoleInputReader();
+        ConsoleExpenditureReader reader = new ConsoleExpenditureReader();
         System.setIn(stdin);
 
-        List<Person> personsList = reader.readPersonsExpenditure();
-        assertEquals(2, personsList.size());
-        assertEquals(120, personsList.get(0).getExpenditure());
-    }
-
-    @Test
-    void shouldInstantiateNecessaryAttributes() {
-        ConsoleInputReader reader = new ConsoleInputReader();
-        assertNotNull(reader.getInputReader());
-        assertNotNull(reader.getInputValidator());
+        List<Expenditure> expenditures = reader.readExpenditures();
+        assertEquals(2, expenditures.size());
+        assertEquals(new BigDecimal("120"), expenditures.get(0).getAmount());
     }
 
     @Test
@@ -50,11 +46,11 @@ class ConsoleInputReaderTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream("Person1 100\n".getBytes()));
 
-        ConsoleInputReader reader = new ConsoleInputReader();
+        ConsoleExpenditureReader reader = new ConsoleExpenditureReader();
         System.setIn(stdin);
 
-        List<Person> personList = reader.readPersonsExpenditure();
-        assertTrue(personList.isEmpty());
+        List<Expenditure> expenditures = reader.readExpenditures();
+        assertTrue(expenditures.isEmpty());
     }
 
     @Test
@@ -62,11 +58,11 @@ class ConsoleInputReaderTest {
         InputStream stdin = System.in;
         System.setIn(new ByteArrayInputStream("Person1,expenditure\n\n".getBytes()));
 
-        ConsoleInputReader reader = new ConsoleInputReader();
+        ConsoleExpenditureReader reader = new ConsoleExpenditureReader();
         System.setIn(stdin);
 
-        List<Person> personList = reader.readPersonsExpenditure();
-        assertTrue(personList.isEmpty());
+        List<Expenditure> expenditures = reader.readExpenditures();
+        assertTrue(expenditures.isEmpty());
     }
 
 }
