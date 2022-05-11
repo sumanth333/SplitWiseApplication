@@ -84,4 +84,26 @@ class TransactionsGeneratorTest {
         assertEquals(testPerson3, transactions.get(2).getPayer());
         assertEquals(testPerson4, transactions.get(2).getReceiver());
     }
+
+    @Test
+    void shouldReturnValidTransactionsForGivenExpendituresWithShares() {
+        Person testPerson1 = new Person("James");Person testPerson2 = new Person("John");
+        BigDecimal amount1 = new BigDecimal("100");BigDecimal amount2 = new BigDecimal("40");
+
+        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
+        personsShareProvider.addNewPersonShare(testPerson1,0.6);
+        personsShareProvider.addNewPersonShare(testPerson2,0.4);
+
+        List<Expenditure> expenditures = new ArrayList<>();
+        Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
+        Expenditure expenditure2 = new Expenditure(testPerson2, amount2, ExpenditureStatus.UNSETTLED);
+
+        expenditures.add(expenditure1);expenditures.add(expenditure2);
+
+        TransactionsGenerator transactionsGenerator = new TransactionsGenerator();
+        List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);
+
+        assertEquals(1, transactions.size());
+        assertEquals(new BigDecimal("16.00"), transactions.get(0).getAmount());
+    }
 }

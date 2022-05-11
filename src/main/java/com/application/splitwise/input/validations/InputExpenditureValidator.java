@@ -11,7 +11,7 @@ public class InputExpenditureValidator {
     }
 
     private boolean isValidFormat(String input) throws InvalidInputFormatException {
-        if ((input.split(",")).length != 2)
+        if ((input.split(",")).length != 2 && (input.split(",")).length != 3)
             throw new InvalidInputFormatException("Given Input Format is invalid :" + input
                     + ", Example format: personName,100.0");
         return true;
