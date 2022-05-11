@@ -4,6 +4,7 @@ import com.application.splitwise.model.Expenditure;
 import com.application.splitwise.model.ExpenditureStatus;
 import com.application.splitwise.model.Person;
 import com.application.splitwise.model.Transaction;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,11 +16,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class TransactionsGeneratorTest {
+    @BeforeEach
+    void setUp() {
+        PersonsShareProvider.getInstance().clearExistingShareDetails();
+    }
+
     @Test
     void shouldReturnEmptyListOnProvidingEqualExpenditureOfPeople() {
         Person testPerson1 = new Person("James");
         Person testPerson2 = new Person("John");
         BigDecimal amount = new BigDecimal("100");
+        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
+        personsShareProvider.addNewPersonShare(testPerson1,null);
+        personsShareProvider.addNewPersonShare(testPerson2,null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount, ExpenditureStatus.UNSETTLED);
@@ -48,6 +57,12 @@ class TransactionsGeneratorTest {
         BigDecimal amount1 = new BigDecimal("110");BigDecimal amount2 = new BigDecimal("80");
         Person testPerson3 = new Person("Jack");BigDecimal amount3 = new BigDecimal("70");
         Person testPerson4 = new Person("Jeff");BigDecimal amount4 = new BigDecimal("140");
+
+        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
+        personsShareProvider.addNewPersonShare(testPerson1,null);
+        personsShareProvider.addNewPersonShare(testPerson2,null);
+        personsShareProvider.addNewPersonShare(testPerson3,null);
+        personsShareProvider.addNewPersonShare(testPerson4,null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
