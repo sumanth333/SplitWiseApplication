@@ -22,11 +22,15 @@ public class Expenditure {
         this.status = status;
     }
 
-    public void updateExpenditure(BigDecimal updatedExpenditure) {
-        amount = updatedExpenditure;
-    }
-
     public void updateStatus(ExpenditureStatus updatedStatus) {
         status = updatedStatus;
+    }
+
+    public void deleteAmount(BigDecimal deletableAmount) {
+        amount = amount.subtract(deletableAmount);
+    }
+
+    public void addAmount(BigDecimal newAmount) {
+        amount = amount.add(newAmount);
     }
 }

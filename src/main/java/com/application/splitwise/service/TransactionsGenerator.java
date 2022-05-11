@@ -12,20 +12,16 @@ import java.util.List;
 public class TransactionsGenerator {
 
     public List<Transaction> generateTransactions(List<Expenditure> expenditures) {
-
         List<Transaction> transactions = new ArrayList<>();
 
-        int index = 0;
         BigDecimal totalAmount = getTotalAmount(expenditures);
-        while (index<expenditures.size()) {
-            BigDecimal amountOfShare = getPersonShare(expenditures.get(index).getPerson()).multiply(totalAmount);
-            BigDecimal amountSpent = expenditures.get(index).getAmount();
+        for(Expenditure debtorExpenditure: expenditures) {
+            BigDecimal amountOfShare = getPersonShare(debtorExpenditure.getPerson()).multiply(totalAmount);
+            BigDecimal amountSpent = debtorExpenditure.getAmount();
             int debtCompareToShare = amountSpent.compareTo(amountOfShare);
             if(debtCompareToShare < 0) {
-                Expenditure debtorExpenditure = expenditures.get(index);
                 transactions.addAll(getTransactionsForGivenDebt(debtorExpenditure, expenditures, totalAmount));
             }
-            index++;
         }
         return transactions;
     }
@@ -53,21 +49,21 @@ public class TransactionsGenerator {
 
         if(!debtAmount.equals(BigDecimal.valueOf(0.0))) {
             if(amountToBeSettled.compareTo(debtAmount) >= 0.0) {
-                updateExpenditure(debtorExpenditure, debtorShare);
-                expenditure.updateExpenditure(expenditure.getAmount().subtract(debtAmount));
+                updateExpenditureStatus(debtorExpenditure);
+                expenditure.deleteAmount(debtAmount);
+                debtorExpenditure.addAmount(debtAmount);
             } else {
-                updateExpenditure(expenditure, beneficiaryShare);
-                debtorExpenditure.updateExpenditure(debtorExpenditure.getAmount().add(amountToBeSettled));
+                updateExpenditureStatus(expenditure);
+                debtorExpenditure.addAmount(amountToBeSettled);
+                expenditure.deleteAmount(amountToBeSettled);
             }
-
             BigDecimal amountPaid = amountToBeSettled.compareTo(debtAmount) >= 0.0 ? debtAmount: amountToBeSettled;
             transactions.add(new Transaction(debtorExpenditure.getPerson(), expenditure.getPerson(), amountPaid));
         }
     }
 
-    private void updateExpenditure(Expenditure debtorExpenditure, BigDecimal equalShare) {
+    private void updateExpenditureStatus(Expenditure debtorExpenditure) {
         debtorExpenditure.updateStatus(ExpenditureStatus.SETTLED);
-        debtorExpenditure.updateExpenditure(equalShare);
     }
 
 

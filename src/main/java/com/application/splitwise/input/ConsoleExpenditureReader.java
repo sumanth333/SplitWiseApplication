@@ -62,7 +62,7 @@ public class ConsoleExpenditureReader implements ExpenditureReader {
     private void updateExpenditureOfGivenPerson(List<Expenditure> expenditures, Person person, BigDecimal amount) {
         expenditures.stream()
                 .filter(expenditure -> expenditure.getPerson().equals(person))
-                .forEach(expenditure -> expenditure.updateExpenditure(expenditure.getAmount().add(amount)));
+                .forEach(expenditure -> expenditure.addAmount(amount));
     }
 
     private boolean isValidInput(String userInput) {
