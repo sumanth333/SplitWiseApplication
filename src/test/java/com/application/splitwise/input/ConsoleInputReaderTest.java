@@ -64,5 +64,4 @@ class ConsoleInputReaderTest {
         List<Expenditure> expenditures = reader.readExpenditures();
         assertTrue(expenditures.isEmpty());
     }
-
 }

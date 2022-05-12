@@ -27,13 +27,14 @@ class TransactionsGeneratorTest {
         Person testPerson2 = new Person("John");
         BigDecimal amount = new BigDecimal("100");
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1,null);
-        personsShareService.addNewPersonShare(testPerson2,null);
+        personsShareService.addNewPersonShare(testPerson1, null);
+        personsShareService.addNewPersonShare(testPerson2, null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount, ExpenditureStatus.UNSETTLED);
         Expenditure expenditure2 = new Expenditure(testPerson2, amount, ExpenditureStatus.UNSETTLED);
-        expenditures.add(expenditure1);expenditures.add(expenditure2);
+        expenditures.add(expenditure1);
+        expenditures.add(expenditure2);
 
         TransactionsGenerator transactionsGenerator = new TransactionsGenerator();
         List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);
@@ -53,16 +54,20 @@ class TransactionsGeneratorTest {
 
     @Test
     void shouldReturnValidTransactionsForGivenExpenditures() {
-        Person testPerson1 = new Person("James");Person testPerson2 = new Person("John");
-        BigDecimal amount1 = new BigDecimal("110");BigDecimal amount2 = new BigDecimal("80");
-        Person testPerson3 = new Person("Jack");BigDecimal amount3 = new BigDecimal("70");
-        Person testPerson4 = new Person("Jeff");BigDecimal amount4 = new BigDecimal("140");
+        Person testPerson1 = new Person("James");
+        Person testPerson2 = new Person("John");
+        BigDecimal amount1 = new BigDecimal("110");
+        BigDecimal amount2 = new BigDecimal("80");
+        Person testPerson3 = new Person("Jack");
+        BigDecimal amount3 = new BigDecimal("70");
+        Person testPerson4 = new Person("Jeff");
+        BigDecimal amount4 = new BigDecimal("140");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1,null);
-        personsShareService.addNewPersonShare(testPerson2,null);
-        personsShareService.addNewPersonShare(testPerson3,null);
-        personsShareService.addNewPersonShare(testPerson4,null);
+        personsShareService.addNewPersonShare(testPerson1, null);
+        personsShareService.addNewPersonShare(testPerson2, null);
+        personsShareService.addNewPersonShare(testPerson3, null);
+        personsShareService.addNewPersonShare(testPerson4, null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
@@ -70,8 +75,10 @@ class TransactionsGeneratorTest {
         Expenditure expenditure3 = new Expenditure(testPerson3, amount3, ExpenditureStatus.UNSETTLED);
         Expenditure expenditure4 = new Expenditure(testPerson4, amount4, ExpenditureStatus.UNSETTLED);
 
-        expenditures.add(expenditure1);expenditures.add(expenditure2);
-        expenditures.add(expenditure3);expenditures.add(expenditure4);
+        expenditures.add(expenditure1);
+        expenditures.add(expenditure2);
+        expenditures.add(expenditure3);
+        expenditures.add(expenditure4);
 
         TransactionsGenerator transactionsGenerator = new TransactionsGenerator();
         List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);
@@ -87,18 +94,21 @@ class TransactionsGeneratorTest {
 
     @Test
     void shouldReturnValidTransactionsForGivenExpendituresWithShares() {
-        Person testPerson1 = new Person("James");Person testPerson2 = new Person("John");
-        BigDecimal amount1 = new BigDecimal("100");BigDecimal amount2 = new BigDecimal("40");
+        Person testPerson1 = new Person("James");
+        Person testPerson2 = new Person("John");
+        BigDecimal amount1 = new BigDecimal("100");
+        BigDecimal amount2 = new BigDecimal("40");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1,0.6);
-        personsShareService.addNewPersonShare(testPerson2,0.4);
+        personsShareService.addNewPersonShare(testPerson1, 0.6);
+        personsShareService.addNewPersonShare(testPerson2, 0.4);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
         Expenditure expenditure2 = new Expenditure(testPerson2, amount2, ExpenditureStatus.UNSETTLED);
 
-        expenditures.add(expenditure1);expenditures.add(expenditure2);
+        expenditures.add(expenditure1);
+        expenditures.add(expenditure2);
 
         TransactionsGenerator transactionsGenerator = new TransactionsGenerator();
         List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);

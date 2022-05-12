@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Getter
 public class Expenditure {
-
     private final String id;
     private final Person person;
     private BigDecimal amount;

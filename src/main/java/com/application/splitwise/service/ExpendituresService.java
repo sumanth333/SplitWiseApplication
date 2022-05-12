@@ -8,13 +8,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ExpendituresService {
-
     private static ExpendituresService expendituresService = null;
 
-    private ExpendituresService(){}
+    private ExpendituresService() {
+    }
 
     public static ExpendituresService getInstance() {
-        if(expendituresService == null) {
+        if (expendituresService == null) {
             expendituresService = new ExpendituresService();
         }
         return expendituresService;
@@ -37,10 +37,9 @@ public class ExpendituresService {
     public BigDecimal getTotalAmountOfExpenditures(List<Expenditure> expenditures) {
         BigDecimal totalAmount = BigDecimal.valueOf(0.0);
 
-        for(Expenditure expenditure: expenditures) {
+        for (Expenditure expenditure : expenditures) {
             totalAmount = totalAmount.add(expenditure.getAmount());
         }
         return totalAmount;
     }
-
 }

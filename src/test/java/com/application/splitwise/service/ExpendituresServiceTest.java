@@ -36,8 +36,8 @@ class ExpendituresServiceTest {
         ExpendituresService expendituresService = ExpendituresService.getInstance();
 
         List<Expenditure> expenditures = new ArrayList<>();
-        expenditures.add(expendituresService.createNewExpenditure(new Person("testPerson1"),BigDecimal.valueOf(50.0)));
-        expenditures.add(expendituresService.createNewExpenditure(new Person("testPerson2"),BigDecimal.valueOf(100.0)));
+        expenditures.add(expendituresService.createNewExpenditure(new Person("testPerson1"), BigDecimal.valueOf(50.0)));
+        expenditures.add(expendituresService.createNewExpenditure(new Person("testPerson2"), BigDecimal.valueOf(100.0)));
 
         BigDecimal totalAmount = expendituresService.getTotalAmountOfExpenditures(expenditures);
         assertEquals(BigDecimal.valueOf(150.0), totalAmount);
@@ -49,11 +49,12 @@ class ExpendituresServiceTest {
 
         Person testPerson = new Person("testPerson");
         List<Expenditure> expenditures = new ArrayList<>();
-        expenditures.add(expendituresService.createNewExpenditure(testPerson,BigDecimal.valueOf(50.0)));
+        expenditures.add(expendituresService.createNewExpenditure(testPerson, BigDecimal.valueOf(50.0)));
         expendituresService.updateExpenditureOfGivenPerson(expenditures, testPerson, BigDecimal.valueOf(120));
 
         assertEquals(BigDecimal.valueOf(170.0), expenditures.get(0).getAmount());
     }
+
     @Test
     void shouldUpdateTheStatusOfGivenExpenditure() {
         ExpendituresService expendituresService = ExpendituresService.getInstance();

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleExpenditureReader implements ExpenditureReader {
-
     private final Scanner inputReader;
     private final InputExpenditureValidator inputExpenditureValidator;
 
@@ -37,7 +36,7 @@ public class ConsoleExpenditureReader implements ExpenditureReader {
             BigDecimal amount = getExpenditureAmountFromInput(userInput);
             if (!personList.contains(person)) {
                 personList.add(person);
-                expenditures.add(expendituresService.createNewExpenditure(person, amount ));
+                expenditures.add(expendituresService.createNewExpenditure(person, amount));
             } else {
                 expendituresService.updateExpenditureOfGivenPerson(expenditures, person, amount);
             }

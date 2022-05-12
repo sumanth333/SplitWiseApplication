@@ -28,5 +28,4 @@ public class SplitWiseApp {
         List<Transaction> transactions = transactionsGenerator.generateTransactions(expenditures);
         writer.writeTransactions(transactions);
     }
-
 }

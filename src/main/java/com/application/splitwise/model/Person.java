@@ -7,7 +7,6 @@ import java.util.UUID;
 
 @Getter
 public class Person {
-
     private final String id;
     private final String name;
 
@@ -38,5 +37,4 @@ public class Person {
         hash = 53 * hash + this.name.hashCode();
         return hash;
     }
-
 }

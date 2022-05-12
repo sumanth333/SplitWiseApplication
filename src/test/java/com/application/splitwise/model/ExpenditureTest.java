@@ -14,7 +14,7 @@ class ExpenditureTest {
         BigDecimal amount = new BigDecimal(123);
         assertThrows(
                 NullPointerException.class,
-                () -> new Expenditure(null, null,null)
+                () -> new Expenditure(null, null, null)
         );
         assertThrows(
                 NullPointerException.class,

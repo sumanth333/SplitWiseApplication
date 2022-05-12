@@ -13,6 +13,7 @@ class PersonTest {
                 NullPointerException.class,
                 () -> new Person(null));
     }
+
     @Test
     void shouldReturnFalseOnComparingPersonWithInvalidObjects() {
         Person person = new Person("James");

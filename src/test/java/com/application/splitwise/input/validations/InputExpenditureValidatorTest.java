@@ -18,6 +18,7 @@ class InputExpenditureValidatorTest {
 
         assertTrue(inputExpenditureValidator.isValidPersonExpenditureInput(personExpenditureInput));
     }
+
     @Test
     void shouldThrowInValidFormatExceptionForInvalidInput() {
 

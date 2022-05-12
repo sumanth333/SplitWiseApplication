@@ -42,5 +42,4 @@ class SplitWiseAppTest {
         verify(mockTransactionsGenerator).generateTransactions(any());
         verify(mockWriter).writeTransactions(any());
     }
-
 }

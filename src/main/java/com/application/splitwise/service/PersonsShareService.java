@@ -6,14 +6,14 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 public class PersonsShareService {
-
     private static PersonsShareService personsShareService = null;
     private HashMap<Person, Double> personsShare;
 
-    private PersonsShareService(){}
+    private PersonsShareService() {
+    }
 
     public static PersonsShareService getInstance() {
-        if(personsShareService == null) {
+        if (personsShareService == null) {
             personsShareService = new PersonsShareService();
             personsShareService.personsShare = new HashMap<>();
         }
@@ -27,15 +27,15 @@ public class PersonsShareService {
     public void addNewPersonShare(Person person, Double share) {
         personsShare.put(person, share);
 
-        if(share == null) {
-            personsShare.replaceAll((key, value) -> (1.0/personsShare.size()));
+        if (share == null) {
+            personsShare.replaceAll((key, value) -> (1.0 / personsShare.size()));
         }
     }
 
     public void createPersonShare(Person person, String input) {
         String[] inputDta = input.split(",");
         Double share = null;
-        if(inputDta.length == 3)
+        if (inputDta.length == 3)
             share = Double.parseDouble(inputDta[2]);
 
         addNewPersonShare(person, share);

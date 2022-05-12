@@ -27,6 +27,7 @@ class PersonsShareServiceTest {
         assertEquals(BigDecimal.valueOf(0.5), personsShareService.getPersonShare(testPerson1));
         assertEquals(BigDecimal.valueOf(0.5), personsShareService.getPersonShare(testPerson2));
     }
+
     @Test
     void ShouldGetExpectedShareOfEachPersonAdded() {
         Person testPerson1 = new Person("testPerson1");
@@ -52,5 +53,4 @@ class PersonsShareServiceTest {
 
         assertEquals(BigDecimal.valueOf(0.5), personsShareService.getPersonShare(testPerson1));
     }
-
 }

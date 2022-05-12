@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionsGenerator {
-
     private final PersonsShareService personsShareService;
     private final ExpendituresService expendituresService;
 
@@ -22,18 +21,18 @@ public class TransactionsGenerator {
         List<Transaction> transactions = new ArrayList<>();
 
         BigDecimal totalAmount = ExpendituresService.getInstance().getTotalAmountOfExpenditures(expenditures);
-        for(Expenditure debtorExpenditure: expenditures) {
+        for (Expenditure debtorExpenditure : expenditures) {
             BigDecimal amountOfShare = personsShareService.getPersonShare(debtorExpenditure.getPerson()).multiply(totalAmount);
             BigDecimal amountSpent = debtorExpenditure.getAmount();
             int debtCompareToShare = amountSpent.compareTo(amountOfShare);
-            if(debtCompareToShare < 0) {
+            if (debtCompareToShare < 0) {
                 transactions.addAll(getTransactionsForGivenDebt(debtorExpenditure, expenditures, totalAmount));
             }
         }
         return transactions;
     }
 
-    private List<Transaction> getTransactionsForGivenDebt(Expenditure debtorExpenditure , List<Expenditure> expenditures, BigDecimal totalAmount) {
+    private List<Transaction> getTransactionsForGivenDebt(Expenditure debtorExpenditure, List<Expenditure> expenditures, BigDecimal totalAmount) {
         List<Transaction> transactions = new ArrayList<>();
 
         expenditures.stream()
@@ -55,8 +54,8 @@ public class TransactionsGenerator {
         BigDecimal beneficiaryShare = (totalAmount.multiply(personsShareService.getPersonShare(expenditure.getPerson())));
         BigDecimal amountToBeSettled = expenditure.getAmount().subtract(beneficiaryShare);
 
-        if(!debtAmount.equals(BigDecimal.valueOf(0.0))) {
-            if(amountToBeSettled.compareTo(debtAmount) >= 0.0) {
+        if (!debtAmount.equals(BigDecimal.valueOf(0.0))) {
+            if (amountToBeSettled.compareTo(debtAmount) >= 0.0) {
                 expendituresService.updateExpenditureStatus(debtorExpenditure);
                 expenditure.deleteAmount(debtAmount);
                 debtorExpenditure.addAmount(debtAmount);
@@ -65,7 +64,7 @@ public class TransactionsGenerator {
                 debtorExpenditure.addAmount(amountToBeSettled);
                 expenditure.deleteAmount(amountToBeSettled);
             }
-            BigDecimal amountPaid = amountToBeSettled.compareTo(debtAmount) >= 0.0 ? debtAmount: amountToBeSettled;
+            BigDecimal amountPaid = amountToBeSettled.compareTo(debtAmount) >= 0.0 ? debtAmount : amountToBeSettled;
             transactions.add(new Transaction(debtorExpenditure.getPerson(), expenditure.getPerson(), amountPaid));
         }
     }
