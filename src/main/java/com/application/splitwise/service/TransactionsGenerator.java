@@ -34,14 +34,14 @@ public class TransactionsGenerator {
                         && expenditure.getStatus() != ExpenditureStatus.SETTLED
                         && debtorExpenditure.getStatus() != ExpenditureStatus.SETTLED)
                 .forEach(expenditure -> {
-                    addTransaction(debtorExpenditure, totalAmount, transactions, expenditure);
+                    addNewTransaction(debtorExpenditure, totalAmount, transactions, expenditure);
                 });
 
         return transactions;
     }
 
-    private void addTransaction(Expenditure debtorExpenditure, BigDecimal totalAmount,
-                                List<Transaction> transactions, Expenditure expenditure) {
+    private void addNewTransaction(Expenditure debtorExpenditure, BigDecimal totalAmount,
+                                   List<Transaction> transactions, Expenditure expenditure) {
         BigDecimal debtorShare = (totalAmount.multiply(getPersonShare(debtorExpenditure.getPerson())));
         BigDecimal debtAmount = (debtorShare).subtract(debtorExpenditure.getAmount());
         BigDecimal beneficiaryShare = (totalAmount.multiply(getPersonShare(expenditure.getPerson())));
@@ -62,10 +62,9 @@ public class TransactionsGenerator {
         }
     }
 
-    private void updateExpenditureStatus(Expenditure debtorExpenditure) {
-        debtorExpenditure.updateStatus(ExpenditureStatus.SETTLED);
+    private void updateExpenditureStatus(Expenditure expenditure) {
+        expenditure.settleAmount();
     }
-
 
     private BigDecimal getPersonShare(Person person) {
         return BigDecimal.valueOf(PersonsShareProvider.getInstance().getPersonShare(person));
