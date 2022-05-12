@@ -7,14 +7,14 @@ import java.util.HashMap;
 public class PersonsShareProvider {
 
     private static PersonsShareProvider personsShareProvider = null;
-    private static HashMap<Person, Double> personsShare;
+    private HashMap<Person, Double> personsShare;
 
     private PersonsShareProvider(){}
 
     public static PersonsShareProvider getInstance() {
         if(personsShareProvider == null) {
             personsShareProvider = new PersonsShareProvider();
-            personsShare = new HashMap<>();
+            personsShareProvider.personsShare = new HashMap<>();
         }
         return personsShareProvider;
     }
