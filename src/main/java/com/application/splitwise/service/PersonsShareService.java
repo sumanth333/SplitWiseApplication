@@ -2,25 +2,26 @@ package com.application.splitwise.service;
 
 import com.application.splitwise.model.Person;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 
-public class PersonsShareProvider {
+public class PersonsShareService {
 
-    private static PersonsShareProvider personsShareProvider = null;
+    private static PersonsShareService personsShareService = null;
     private HashMap<Person, Double> personsShare;
 
-    private PersonsShareProvider(){}
+    private PersonsShareService(){}
 
-    public static PersonsShareProvider getInstance() {
-        if(personsShareProvider == null) {
-            personsShareProvider = new PersonsShareProvider();
-            personsShareProvider.personsShare = new HashMap<>();
+    public static PersonsShareService getInstance() {
+        if(personsShareService == null) {
+            personsShareService = new PersonsShareService();
+            personsShareService.personsShare = new HashMap<>();
         }
-        return personsShareProvider;
+        return personsShareService;
     }
 
-    public Double getPersonShare(Person person) {
-        return personsShare.get(person);
+    public BigDecimal getPersonShare(Person person) {
+        return BigDecimal.valueOf(personsShare.get(person));
     }
 
     public void addNewPersonShare(Person person, Double share) {
@@ -29,6 +30,15 @@ public class PersonsShareProvider {
         if(share == null) {
             personsShare.replaceAll((key, value) -> (1.0/personsShare.size()));
         }
+    }
+
+    public void createPersonShare(Person person, String input) {
+        String[] inputDta = input.split(",");
+        Double share = null;
+        if(inputDta.length == 3)
+            share = Double.parseDouble(inputDta[2]);
+
+        addNewPersonShare(person, share);
     }
 
     public void clearExistingShareDetails() {
