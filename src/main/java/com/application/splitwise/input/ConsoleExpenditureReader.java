@@ -4,9 +4,9 @@ import com.application.splitwise.exceptions.InvalidInputFormatException;
 import com.application.splitwise.exceptions.InvalidInputValueException;
 import com.application.splitwise.input.validations.InputExpenditureValidator;
 import com.application.splitwise.model.Expenditure;
-import com.application.splitwise.model.ExpenditureStatus;
 import com.application.splitwise.model.Person;
-import com.application.splitwise.service.PersonsShareProvider;
+import com.application.splitwise.service.ExpendituresService;
+import com.application.splitwise.service.PersonsShareService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,39 +30,20 @@ public class ConsoleExpenditureReader implements ExpenditureReader {
 
         String userInput;
         System.out.println("Please provide persons and expenditure below, enter 'exit' to stop");
+        ExpendituresService expendituresService = ExpendituresService.getInstance();
         while (!((userInput = inputReader.nextLine()).equalsIgnoreCase("exit")) && isValidInput(userInput)) {
             Person person = getPersonFromInput(userInput);
-            createPersonShareFromInput(person, userInput);
-            BigDecimal amount = getExpenditureFromInput(userInput);
-            if (personList.contains(person)) {
-                updateExpenditureOfGivenPerson(expenditures, person, amount);
-            } else {
+            PersonsShareService.getInstance().createPersonShare(person, userInput);
+            BigDecimal amount = getExpenditureAmountFromInput(userInput);
+            if (!personList.contains(person)) {
                 personList.add(person);
-                createNewExpenditure(expenditures, person, amount );
+                expenditures.add(expendituresService.createNewExpenditure(person, amount ));
+            } else {
+                expendituresService.updateExpenditureOfGivenPerson(expenditures, person, amount);
             }
         }
 
         return expenditures;
-    }
-
-    private void createPersonShareFromInput(Person person, String input) {
-        String[] inputDta = input.split(",");
-        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
-        Double share = null;
-        if(inputDta.length == 3)
-            share = Double.parseDouble(inputDta[2]);
-
-        personsShareProvider.addNewPersonShare(person, share);
-    }
-
-    private void createNewExpenditure(List<Expenditure> expenditures, Person person, BigDecimal amount) {
-        expenditures.add(new Expenditure(person, amount, ExpenditureStatus.UNSETTLED));
-    }
-
-    private void updateExpenditureOfGivenPerson(List<Expenditure> expenditures, Person person, BigDecimal amount) {
-        expenditures.stream()
-                .filter(expenditure -> expenditure.getPerson().equals(person))
-                .forEach(expenditure -> expenditure.addAmount(amount));
     }
 
     private boolean isValidInput(String userInput) {
@@ -82,7 +63,7 @@ public class ConsoleExpenditureReader implements ExpenditureReader {
         return new Person(personData[0]);
     }
 
-    private BigDecimal getExpenditureFromInput(String input) {
+    private BigDecimal getExpenditureAmountFromInput(String input) {
         String[] inputDta = input.split(",");
 
         return new BigDecimal(inputDta[1]);

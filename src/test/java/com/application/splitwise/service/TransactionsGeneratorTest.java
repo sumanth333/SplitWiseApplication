@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TransactionsGeneratorTest {
     @BeforeEach
     void setUp() {
-        PersonsShareProvider.getInstance().clearExistingShareDetails();
+        PersonsShareService.getInstance().clearExistingShareDetails();
     }
 
     @Test
@@ -26,9 +26,9 @@ class TransactionsGeneratorTest {
         Person testPerson1 = new Person("James");
         Person testPerson2 = new Person("John");
         BigDecimal amount = new BigDecimal("100");
-        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
-        personsShareProvider.addNewPersonShare(testPerson1,null);
-        personsShareProvider.addNewPersonShare(testPerson2,null);
+        PersonsShareService personsShareService = PersonsShareService.getInstance();
+        personsShareService.addNewPersonShare(testPerson1,null);
+        personsShareService.addNewPersonShare(testPerson2,null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount, ExpenditureStatus.UNSETTLED);
@@ -58,11 +58,11 @@ class TransactionsGeneratorTest {
         Person testPerson3 = new Person("Jack");BigDecimal amount3 = new BigDecimal("70");
         Person testPerson4 = new Person("Jeff");BigDecimal amount4 = new BigDecimal("140");
 
-        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
-        personsShareProvider.addNewPersonShare(testPerson1,null);
-        personsShareProvider.addNewPersonShare(testPerson2,null);
-        personsShareProvider.addNewPersonShare(testPerson3,null);
-        personsShareProvider.addNewPersonShare(testPerson4,null);
+        PersonsShareService personsShareService = PersonsShareService.getInstance();
+        personsShareService.addNewPersonShare(testPerson1,null);
+        personsShareService.addNewPersonShare(testPerson2,null);
+        personsShareService.addNewPersonShare(testPerson3,null);
+        personsShareService.addNewPersonShare(testPerson4,null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
@@ -90,9 +90,9 @@ class TransactionsGeneratorTest {
         Person testPerson1 = new Person("James");Person testPerson2 = new Person("John");
         BigDecimal amount1 = new BigDecimal("100");BigDecimal amount2 = new BigDecimal("40");
 
-        PersonsShareProvider personsShareProvider = PersonsShareProvider.getInstance();
-        personsShareProvider.addNewPersonShare(testPerson1,0.6);
-        personsShareProvider.addNewPersonShare(testPerson2,0.4);
+        PersonsShareService personsShareService = PersonsShareService.getInstance();
+        personsShareService.addNewPersonShare(testPerson1,0.6);
+        personsShareService.addNewPersonShare(testPerson2,0.4);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
