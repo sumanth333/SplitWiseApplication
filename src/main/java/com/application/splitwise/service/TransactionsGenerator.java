@@ -49,23 +49,23 @@ public class TransactionsGenerator {
 
     private void addNewTransaction(Expenditure debtorExpenditure, BigDecimal totalAmount,
                                    List<Transaction> transactions, Expenditure expenditure) {
+
         BigDecimal debtorShare = (totalAmount.multiply(personsShareService.getPersonShare(debtorExpenditure.getPerson())));
         BigDecimal debtAmount = (debtorShare).subtract(debtorExpenditure.getAmount());
         BigDecimal beneficiaryShare = (totalAmount.multiply(personsShareService.getPersonShare(expenditure.getPerson())));
         BigDecimal amountToBeSettled = expenditure.getAmount().subtract(beneficiaryShare);
 
         if (!debtAmount.equals(BigDecimal.valueOf(0.0))) {
-            if (amountToBeSettled.compareTo(debtAmount) >= 0.0) {
-                expendituresService.updateExpenditureStatus(debtorExpenditure);
-                expenditure.deleteAmount(debtAmount);
-                debtorExpenditure.addAmount(debtAmount);
-            } else {
-                expendituresService.updateExpenditureStatus(expenditure);
-                debtorExpenditure.addAmount(amountToBeSettled);
-                expenditure.deleteAmount(amountToBeSettled);
-            }
             BigDecimal amountPaid = amountToBeSettled.compareTo(debtAmount) >= 0.0 ? debtAmount : amountToBeSettled;
             transactions.add(new Transaction(debtorExpenditure.getPerson(), expenditure.getPerson(), amountPaid));
+
+            if (amountToBeSettled.compareTo(debtAmount) >= 0.0) {
+                expendituresService.updateExpenditureStatus(debtorExpenditure);
+                expendituresService.updateTransactionAmountInExpenditure(debtorExpenditure, expenditure, debtAmount);
+            } else {
+                expendituresService.updateExpenditureStatus(expenditure);
+                expendituresService.updateTransactionAmountInExpenditure(debtorExpenditure, expenditure, amountToBeSettled);
+            }
         }
     }
 }

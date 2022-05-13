@@ -42,4 +42,9 @@ public class ExpendituresService {
         }
         return totalAmount;
     }
+
+    public void updateTransactionAmountInExpenditure(Expenditure debtorExpenditure, Expenditure expenditure, BigDecimal debtAmount) {
+        expenditure.deleteAmount(debtAmount);
+        debtorExpenditure.addAmount(debtAmount);
+    }
 }
