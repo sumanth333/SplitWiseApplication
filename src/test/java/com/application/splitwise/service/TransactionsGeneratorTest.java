@@ -27,8 +27,8 @@ class TransactionsGeneratorTest {
         Person testPerson2 = new Person("John");
         BigDecimal amount = new BigDecimal("100");
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1, null);
-        personsShareService.addNewPersonShare(testPerson2, null);
+        personsShareService.addNewShareToPersonsShare(testPerson1, null);
+        personsShareService.addNewShareToPersonsShare(testPerson2, null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount, ExpenditureStatus.UNSETTLED);
@@ -64,10 +64,10 @@ class TransactionsGeneratorTest {
         BigDecimal amount4 = new BigDecimal("140");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1, null);
-        personsShareService.addNewPersonShare(testPerson2, null);
-        personsShareService.addNewPersonShare(testPerson3, null);
-        personsShareService.addNewPersonShare(testPerson4, null);
+        personsShareService.addNewShareToPersonsShare(testPerson1, null);
+        personsShareService.addNewShareToPersonsShare(testPerson2, null);
+        personsShareService.addNewShareToPersonsShare(testPerson3, null);
+        personsShareService.addNewShareToPersonsShare(testPerson4, null);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);
@@ -100,8 +100,8 @@ class TransactionsGeneratorTest {
         BigDecimal amount2 = new BigDecimal("40");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1, 0.6);
-        personsShareService.addNewPersonShare(testPerson2, 0.4);
+        personsShareService.addNewShareToPersonsShare(testPerson1, 0.6);
+        personsShareService.addNewShareToPersonsShare(testPerson2, 0.4);
 
         List<Expenditure> expenditures = new ArrayList<>();
         Expenditure expenditure1 = new Expenditure(testPerson1, amount1, ExpenditureStatus.UNSETTLED);

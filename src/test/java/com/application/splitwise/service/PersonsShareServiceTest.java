@@ -21,8 +21,8 @@ class PersonsShareServiceTest {
         Person testPerson2 = new Person("testPerson2");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1, null);
-        personsShareService.addNewPersonShare(testPerson2, null);
+        personsShareService.addNewShareToPersonsShare(testPerson1, null);
+        personsShareService.addNewShareToPersonsShare(testPerson2, null);
 
         assertEquals(BigDecimal.valueOf(0.5), personsShareService.getPersonShare(testPerson1));
         assertEquals(BigDecimal.valueOf(0.5), personsShareService.getPersonShare(testPerson2));
@@ -35,9 +35,9 @@ class PersonsShareServiceTest {
         Person testPerson3 = new Person("testPerson3");
 
         PersonsShareService personsShareService = PersonsShareService.getInstance();
-        personsShareService.addNewPersonShare(testPerson1, 0.25);
-        personsShareService.addNewPersonShare(testPerson2, 0.40);
-        personsShareService.addNewPersonShare(testPerson3, 0.35);
+        personsShareService.addNewShareToPersonsShare(testPerson1, 0.25);
+        personsShareService.addNewShareToPersonsShare(testPerson2, 0.40);
+        personsShareService.addNewShareToPersonsShare(testPerson3, 0.35);
 
         assertEquals(BigDecimal.valueOf(0.25), personsShareService.getPersonShare(testPerson1));
         assertEquals(BigDecimal.valueOf(0.40), personsShareService.getPersonShare(testPerson2));

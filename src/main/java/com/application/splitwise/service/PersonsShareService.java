@@ -24,7 +24,7 @@ public class PersonsShareService {
         return BigDecimal.valueOf(personsShare.get(person));
     }
 
-    public void addNewPersonShare(Person person, Double share) {
+    public void addNewShareToPersonsShare(Person person, Double share) {
         personsShare.put(person, share);
 
         if (share == null) {
@@ -38,7 +38,7 @@ public class PersonsShareService {
         if (inputDta.length == 3)
             share = Double.parseDouble(inputDta[2]);
 
-        addNewPersonShare(person, share);
+        addNewShareToPersonsShare(person, share);
     }
 
     public void clearExistingShareDetails() {
